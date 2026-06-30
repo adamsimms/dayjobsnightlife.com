@@ -1,10 +1,16 @@
+.btn-search,
+.btn-concierge {
+  border: 0;
+  cursor: pointer;
+}
+
 .btn-search {
-  background: $orange;
-  color: $white;
+  background: $djnl-orange;
+  color: $djnl-white;
   display: block;
   float: left;
-  font-weight: $bold;
-  margin: $spacing-md $spacing-sm 0 ;
+  font-weight: $font-weight-bold;
+  margin: $spacing-md $spacing-sm 0;
   padding: $spacing-sm/1.5;
   text-decoration: none;
   text-transform: uppercase;
@@ -15,17 +21,17 @@
   }
 
   &:hover {
-    color: $white;
+    color: $djnl-white;
     text-decoration: none;
   }
 }
 
 .btn-concierge {
-  background: $grey;
-  color: $white;
+  background: $djnl-grey;
+  color: $djnl-white;
   display: block;
   float: left;
-  font-weight: $bold;
+  font-weight: $font-weight-bold;
   margin: $spacing-md 0 0;
   padding: $spacing-sm/1.5;
   text-transform: uppercase;
@@ -36,7 +42,13 @@
   }
 
   &:hover {
-    color: $white;
+    color: $djnl-white;
     text-decoration: none;
   }
+}
+
+.site-search {
+  clear: both;
+  margin-top: $spacing-sm;
+  padding-top: $spacing-sm;
 }

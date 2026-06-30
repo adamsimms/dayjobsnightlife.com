@@ -1,0 +1,19 @@
+{
+  "name": "dayjobsnightlife/dayjobsnightlife.com",
+  "description": "WordPress theme for Day Jobs and the Nightlife",
+  "type": "wordpress-theme",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.4"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.9"
+  },
+  "scripts": {
+    "phpcs": "phpcs --standard=ruleset.xml --extensions=php -n -s .",
+    "phpcbf": "phpcbf --standard=ruleset.xml --extensions=php -n -s ."
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

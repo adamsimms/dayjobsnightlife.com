@@ -7,34 +7,34 @@ article {
   }
 
   a {
-    color: $grey;
+    color: $djnl-grey;
 
     &:hover {
-      color: $blue;
+      color: $djnl-blue;
       text-decoration: none;
     }
   }
 
   h2 {
     text-transform: uppercase;
-    font-weight: $light;
+    font-weight: $font-weight-light;
     margin: $spacing-sm 0 0;
   }
 
   span {
       font-size: .65em;
       font-style: italic;
-      font-weight: $light;
+      font-weight: $font-weight-light;
       margin: 0;
     }
 
   p {
-    color: $grey;
-    font-weight: $semibold;
+    color: $djnl-grey;
+    font-weight: $font-weight-semibold;
     margin: $spacing-xs 0 0;
 
     a {
-      color: $blue;
+      color: $djnl-blue;
     }
   }
 }

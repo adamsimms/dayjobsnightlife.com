@@ -1,33 +1,29 @@
-// Grid settings
-$enable-flex:           true;
-$main-sm-columns:       12;
-$sidebar-sm-columns:    4;
+// Bootstrap settings (must be defined before Bootstrap is imported)
+$enable-flex: true;
+
+// Theme layout
+$main-sm-columns: 12;
+$sidebar-sm-columns: 4;
 
 // Spacing
-$spacing-xs:            6px;
-$spacing-sm:            12px;
-$spacing-md:            24px;
-$spacing-lg:            48px;
+$spacing-xs: 6px;
+$spacing-sm: 12px;
+$spacing-md: 24px;
+$spacing-lg: 48px;
 
-// Colors
-$brand-primary:         #27ae60;
-
-$purple:                #9d00ff;
-
-$blue:                  #37bbff;
-$green:                 #74c707;
-$pink:                  #ff09de;
-$orange:                #ff4c06;
-$grey:                  #636363;
-
-$white:                 #fff;
-$grey-light:            #e1e1e1;
-$black:                 #363636;
-
+// Brand colors (prefixed to avoid clashing with Bootstrap variables)
+$djnl-purple: #9d00ff;
+$djnl-blue: #37bbff;
+$djnl-green: #74c707;
+$djnl-pink: #ff09de;
+$djnl-orange: #ff4c06;
+$djnl-grey: #636363;
+$djnl-white: #fff;
+$djnl-grey-light: #e1e1e1;
+$djnl-black: #363636;
 
 // Typography
-$museo:                 "museo-sans", sans-serif;
-
-$bold:                  600;
-$semibold:              400;
-$light:                 200;
+$museo: "museo-sans", sans-serif;
+$font-weight-bold: 600;
+$font-weight-semibold: 400;
+$font-weight-light: 200;

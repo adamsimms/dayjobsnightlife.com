@@ -32,7 +32,10 @@
     <exclude-pattern>index.php</exclude-pattern>
     <exclude-pattern>page.php</exclude-pattern>
     <exclude-pattern>single.php</exclude-pattern>
+    <exclude-pattern>home.php</exclude-pattern>
     <exclude-pattern>template-custom.php</exclude-pattern>
+    <exclude-pattern>search.php</exclude-pattern>
+    <exclude-pattern>searchform.php</exclude-pattern>
   </rule>
 
   <!-- Force 2 spaces indentation -->

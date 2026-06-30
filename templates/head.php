@@ -4,7 +4,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <?php wp_head(); ?>
 
-  <!-- Typekit -->
-  <script type="text/javascript" src="//use.typekit.net/zua1yrw.js"></script>
-  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <?php
+  $typekit_id = Roots\Sage\Extras\typekit_id();
+  if ($typekit_id) :
+    ?>
+    <script src="<?php echo esc_url('https://use.typekit.net/' . rawurlencode($typekit_id) . '.js'); ?>"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+  <?php endif; ?>
 </head>
