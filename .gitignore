@@ -4,3 +4,10 @@ dist
 bower_components
 node_modules
 npm-debug.log
+.env
+backups/database.sql
+backups/wp-content/*
+!backups/wp-content/.gitkeep
+theme/*
+!theme/.gitkeep
+docker-data
