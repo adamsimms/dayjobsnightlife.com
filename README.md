@@ -1,62 +1,107 @@
 # Day Jobs and the Nightlife
 
-Custom WordPress theme for [dayjobsnightlife.com](https://dayjobsnightlife.com), originally built on [Sage 8](https://roots.io/sage/) and modernized for current Node and PHP tooling.
+WordPress site for [dayjobsnightlife.com](https://dayjobsnightlife.com), managed with [Bedrock](https://roots.io/bedrock/) and a custom [Sage 10](https://roots.io/sage/) theme.
+
+## Should WordPress live in this repo?
+
+**Yes — for this project, that is the right call.** This repository now uses Bedrock, which means:
+
+| In git | Not in git |
+| --- | --- |
+| WordPress core (via Composer) | `.env` secrets |
+| Theme source + built assets | Database |
+| Plugin declarations (Composer) | `web/app/uploads/` media |
+| Config templates | Server credentials |
+
+That gives you versioned infrastructure, reproducible installs, and safer deployments. You still migrate the database and uploads separately when moving environments.
+
+## Hosting options
+
+### Option A: Bedrock-native hosting (best)
+
+Point the web server document root at `web/`. Deploy the full Bedrock project.
+
+### Option B: Classic shared hosting + FTP (common)
+
+Keep the existing WordPress install on the server and deploy **only the built theme** to:
+
+`public_html/wp-content/themes/dayjobsnightlife/`
+
+Set GitHub secret `FTP_DEPLOY_MODE=theme`.
 
 ## Requirements
 
-| Prerequisite | Version |
-| --- | --- |
-| WordPress | 5.x or newer |
-| PHP | 7.4+ |
-| Node.js | 20.x |
-| npm | 9+ |
+- PHP 8.3+
+- Composer 2
+- Node.js 20+
+- MySQL
 
-### Recommended WordPress plugins
-
-| Plugin | Purpose |
-| --- | --- |
-| [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/) | `tag-line` field on posts |
-| [Soil](https://roots.io/plugins/soil/) | Cleaner markup, nice search, relative URLs |
-| Mailchimp plugin | Powers the footer signup form via shortcode |
-
-Configure social links, contact details, Mailchimp shortcode, and Adobe Fonts kit ID under **Appearance → Customize → Theme Options**.
-
-## Development
+## Local setup
 
 ```bash
-nvm use
+cp .env.example .env
+# Edit .env with local database credentials and WP_HOME
+
+composer install
+cd web/app/themes/dayjobsnightlife
+composer install
 npm install
 npm run build
 ```
 
-### Available scripts
+Point your local site URL at the value of `WP_HOME` in `.env` (for example `https://dayjobsnightlife.test`).
 
-| Command | Description |
-| --- | --- |
-| `npm run build` | Compile theme assets into `dist/` |
-| `npm run build:production` | Production build with asset revisioning |
-| `npm run watch` | Watch files and reload via BrowserSync |
-| `npm run lint:js` | Lint theme JavaScript |
-| `composer phpcs` | Lint PHP against `ruleset.xml` |
+## Theme development
 
-Update `assets/manifest.json` → `config.devUrl` to match your local WordPress URL before running `npm run watch`.
-
-## Theme structure
-
-```
-assets/          Source styles, scripts, and images
-dist/            Compiled assets (committed for deployment)
-lib/             PHP theme logic
-templates/       Partial templates
-templates/home/  Homepage layout partials
-home.php         Homepage template
+```bash
+cd web/app/themes/dayjobsnightlife
+npm run dev
 ```
 
-Homepage category IDs and featured-post meta values live in `lib/home.php`.
+## Plugins
 
-## Deployment
+Installed via Composer:
 
-Built assets are committed in `dist/`, so the theme works on a server without Node installed. After changing styles or scripts locally, run `npm run build:production` and commit the updated `dist/` files.
+- Advanced Custom Fields
+
+Recommended manual installs:
+
+- [Soil](https://roots.io/plugins/soil/)
+- Mailchimp plugin for the footer signup form
+
+Theme options live under **Appearance → Customize → Theme Options**.
+
+ACF field groups are versioned in `web/app/themes/dayjobsnightlife/resources/acf-json/`.
+
+## Auto deploy to FTP
+
+Configure these GitHub repository secrets:
+
+| Secret | Example | Purpose |
+| --- | --- | --- |
+| `FTP_SERVER` | `ftp.example.com` | FTP host |
+| `FTP_USERNAME` | `deploy@example.com` | FTP user |
+| `FTP_PASSWORD` | `***` | FTP password |
+| `FTP_DEPLOY_MODE` | `theme` or `bedrock` | Deploy strategy |
+| `FTP_THEME_PATH` | `/public_html/wp-content/themes/dayjobsnightlife/` | Theme-only target |
+| `FTP_REMOTE_PATH` | `/public_html/` | Bedrock/full-site target |
+
+Pushes to `master`/`main` run `.github/workflows/deploy.yml`.
+
+## Project structure
+
+```
+config/                 WordPress configuration
+web/
+  app/
+    plugins/            Composer-managed plugins
+    themes/
+      dayjobsnightlife/ Sage 10 theme
+        app/              PHP (Composers, setup, options)
+        resources/        Blade views, SCSS, images, ACF JSON
+        public/           Built assets
+  wp/                   WordPress core (Composer)
+```
 
 ## License
 

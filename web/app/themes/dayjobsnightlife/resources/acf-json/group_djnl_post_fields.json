@@ -1,0 +1,38 @@
+{
+    "key": "group_djnl_post_fields",
+    "title": "Post Fields",
+    "fields": [
+        {
+            "key": "field_djnl_tag_line",
+            "label": "Tag Line",
+            "name": "tag-line",
+            "type": "text",
+            "instructions": "Short subtitle shown beside the post title.",
+            "required": 0
+        },
+        {
+            "key": "field_djnl_feature_index",
+            "label": "Feature Index",
+            "name": "feature-index",
+            "type": "select",
+            "choices": {
+                "": "None",
+                "feature-1": "Feature 1",
+                "feature-2": "Feature 2",
+                "feature-3": "Feature 3"
+            },
+            "allow_null": 1,
+            "ui": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "active": true
+}

@@ -1,0 +1,58 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+
+      - name: Install production dependencies
+        run: |
+          composer install --no-dev --optimize-autoloader --no-interaction
+          cd web/app/themes/dayjobsnightlife
+          composer install --no-dev --optimize-autoloader --no-interaction
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: web/app/themes/dayjobsnightlife/package-lock.json
+
+      - name: Build theme assets
+        working-directory: web/app/themes/dayjobsnightlife
+        run: |
+          npm ci
+          npm run build
+
+      - name: Deploy theme to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: web/app/themes/dayjobsnightlife/
+          server-dir: ${{ secrets.FTP_THEME_PATH }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/resources/**
+            **/bud.config.js
+            **/package.json
+            **/package-lock.json
+            **/tailwind.config.js
+            **/jsconfig.json
+            **/yarn.lock
+            **/.eslintrc.json
+            **/.nvmrc
