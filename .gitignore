@@ -1,6 +1,34 @@
-# Include your project-specific ignores in this file
-# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
-dist
-bower_components
-node_modules
-npm-debug.log
+# Application
+web/app/plugins/*
+!web/app/plugins/.gitkeep
+# Ignore Composer-installed mu-plugin directories; single-file mu-plugins are tracked intentionally
+web/app/mu-plugins/*/
+web/app/themes/twentytwentyfive/
+web/app/upgrade
+web/app/uploads/*
+!web/app/uploads/.gitkeep
+web/app/cache/*
+
+# WordPress
+web/wp
+web/.htaccess
+
+# Logs
+*.log
+
+# Dotenv
+.env
+.env.*
+!.env.example
+
+# Composer
+/vendor
+auth.json
+
+# PHPUnit/Pest
+phpunit.xml
+.phpunit.result.cache
+.phpunit.cache
+
+# WP-CLI
+wp-cli.local.yml

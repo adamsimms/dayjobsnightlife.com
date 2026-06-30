@@ -1,0 +1,19 @@
+.search-form {
+  @extend .form-inline;
+}
+
+.search-form label {
+  font-weight: normal;
+  @extend .form-group;
+}
+
+.search-form .search-field,
+.search-form input[type="search"] {
+  @extend .form-control;
+}
+
+.search-form .search-submit,
+.search-form button[type="submit"] {
+  @extend .btn;
+  @extend .btn-secondary;
+}

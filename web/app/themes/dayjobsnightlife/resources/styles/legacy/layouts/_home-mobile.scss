@@ -1,0 +1,47 @@
+.mobile-home-section {
+  margin: $spacing-md 0;
+}
+
+.mobile-post-card {
+  border-bottom: 1px solid $djnl-grey-light;
+  margin-bottom: $spacing-sm;
+  padding-bottom: $spacing-sm;
+
+  img {
+    height: auto;
+    width: 100%;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: $font-weight-light;
+    margin: $spacing-xs 0 0;
+  }
+
+  p {
+    color: $djnl-grey;
+    font-size: 0.9rem;
+    margin: $spacing-xs 0 0;
+  }
+}
+
+.mobile-nav-primary {
+  margin: $spacing-md 0;
+
+  .nav {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    border-bottom: 1px solid $djnl-grey-light;
+    padding: $spacing-xs 0;
+  }
+
+  a {
+    color: $djnl-blue;
+    text-decoration: none;
+  }
+}

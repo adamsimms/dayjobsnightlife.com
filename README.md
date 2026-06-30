@@ -1,114 +1,108 @@
-# [Sage](https://roots.io/sage/)
-[![Build Status](https://travis-ci.org/roots/sage.svg)](https://travis-ci.org/roots/sage)
-[![devDependency Status](https://david-dm.org/roots/sage/dev-status.svg)](https://david-dm.org/roots/sage#info=devDependencies)
+# Day Jobs and the Nightlife
 
-Sage is a WordPress starter theme based on HTML5 Boilerplate, gulp, Bower, and Bootstrap Sass, that will help you make better themes.
+WordPress site for [dayjobsnightlife.com](https://dayjobsnightlife.com), managed with [Bedrock](https://roots.io/bedrock/) and a custom [Sage 10](https://roots.io/sage/) theme.
 
-* Source: [https://github.com/roots/sage](https://github.com/roots/sage)
-* Homepage: [https://roots.io/sage/](https://roots.io/sage/)
-* Documentation: [https://roots.io/sage/docs/](https://roots.io/sage/docs/)
-* Twitter: [@rootswp](https://twitter.com/rootswp)
-* Newsletter: [Subscribe](http://roots.io/subscribe/)
-* Forum: [https://discourse.roots.io/](https://discourse.roots.io/)
+## Should WordPress live in this repo?
+
+**Yes — for this project, that is the right call.** This repository now uses Bedrock, which means:
+
+| In git | Not in git |
+| --- | --- |
+| WordPress core (via Composer) | `.env` secrets |
+| Theme source + built assets | Database |
+| Plugin declarations (Composer) | `web/app/uploads/` media |
+| Config templates | Server credentials |
+
+That gives you versioned infrastructure, reproducible installs, and safer deployments. You still migrate the database and uploads separately when moving environments.
+
+## Hosting options
+
+### Option A: Bedrock-native hosting (best)
+
+Point the web server document root at `web/`. Deploy the full Bedrock project.
+
+### Option B: Classic shared hosting + FTP (common)
+
+Keep the existing WordPress install on the server and deploy **only the built theme** to:
+
+`public_html/wp-content/themes/dayjobsnightlife/`
+
+Set GitHub secret `FTP_DEPLOY_MODE=theme`.
 
 ## Requirements
 
-| Prerequisite    | How to check | How to install
-| --------------- | ------------ | ------------- |
-| PHP >= 5.4.x    | `php -v`     | [php.net](http://php.net/manual/en/install.php) |
-| Node.js 0.12.x  | `node -v`    | [nodejs.org](http://nodejs.org/) |
-| gulp >= 3.8.10  | `gulp -v`    | `npm install -g gulp` |
-| Bower >= 1.3.12 | `bower -v`   | `npm install -g bower` |
+- PHP 8.3+
+- Composer 2
+- Node.js 20+
+- MySQL
 
-For more installation notes, refer to the [Install gulp and Bower](#install-gulp-and-bower) section in this document.
+## Local setup
 
-## Features
+```bash
+cp .env.example .env
+# Edit .env with local database credentials and WP_HOME
 
-* [gulp](http://gulpjs.com/) build script that compiles both Sass and Less, checks for JavaScript errors, optimizes images, and concatenates and minifies files
-* [BrowserSync](http://www.browsersync.io/) for keeping multiple browsers and devices synchronized while testing, along with injecting updated CSS and JS into your browser while you're developing
-* [Bower](http://bower.io/) for front-end package management
-* [asset-builder](https://github.com/austinpray/asset-builder) for the JSON file based asset pipeline
-* [Bootstrap](http://getbootstrap.com/)
-* [Theme wrapper](https://roots.io/sage/docs/theme-wrapper/)
-* ARIA roles and microformats
-* Posts use the [hNews](http://microformats.org/wiki/hnews) microformat
-* [Multilingual ready](https://roots.io/wpml/) and over 30 available [community translations](https://github.com/roots/sage-translations)
+composer install
+cd web/app/themes/dayjobsnightlife
+composer install
+npm install
+npm run build
+```
 
-Install the [Soil](https://github.com/roots/soil) plugin to enable additional features:
-
-* Cleaner output of `wp_head` and enqueued assets
-* Cleaner HTML output of navigation menus
-* Root relative URLs
-* Nice search (`/search/query/`)
-* Google CDN jQuery snippet from [HTML5 Boilerplate](http://html5boilerplate.com/)
-* Google Analytics snippet from [HTML5 Boilerplate](http://html5boilerplate.com/)
-
-See a complete working example in the [roots-example-project.com repo](https://github.com/roots/roots-example-project.com).
-
-## Theme installation
-
-Clone the git repo - `git clone https://github.com/roots/sage.git` and then rename the directory to the name of your theme or website.
-
-## Theme setup
-
-Edit `lib/setup.php` to enable or disable theme features, setup navigation menus, post thumbnail sizes, post formats, and sidebars.
+Point your local site URL at the value of `WP_HOME` in `.env` (for example `https://dayjobsnightlife.test`).
 
 ## Theme development
 
-Sage uses [gulp](http://gulpjs.com/) as its build system and [Bower](http://bower.io/) to manage front-end packages.
-
-### Install gulp and Bower
-
-Building the theme requires [node.js](http://nodejs.org/download/). We recommend you update to the latest version of npm: `npm install -g npm@latest`.
-
-From the command line:
-
-1. Install [gulp](http://gulpjs.com) and [Bower](http://bower.io/) globally with `npm install -g gulp bower`
-2. Navigate to the theme directory, then run `npm install`
-3. Run `bower install`
-
-You now have all the necessary dependencies to run the build process.
-
-### Available gulp commands
-
-* `gulp` — Compile and optimize the files in your assets directory
-* `gulp watch` — Compile assets when file changes are made
-* `gulp --production` — Compile assets for production (no source maps).
-
-### Using BrowserSync
-
-To use BrowserSync during `gulp watch` you need to update `devUrl` at the bottom of `assets/manifest.json` to reflect your local development hostname.
-
-For example, if your local development URL is `http://project-name.dev` you would update the file to read:
-```json
-...
-  "config": {
-    "devUrl": "http://project-name.dev"
-  }
-...
-```
-If your local development URL looks like `http://localhost:8888/project-name/` you would update the file to read:
-```json
-...
-  "config": {
-    "devUrl": "http://localhost:8888/project-name/"
-  }
-...
+```bash
+cd web/app/themes/dayjobsnightlife
+npm run dev
 ```
 
-## Documentation
+## Plugins
 
-Sage documentation is available at [https://roots.io/sage/docs/](https://roots.io/sage/docs/).
+Installed via Composer:
 
-## Contributing
+- Advanced Custom Fields
 
-Contributions are welcome from everyone. We have [contributing guidelines](CONTRIBUTING.md) to help you get started.
+Recommended manual installs:
 
-## Community
+- [Soil](https://roots.io/plugins/soil/)
+- Mailchimp plugin for the footer signup form
 
-Keep track of development and community news.
+Theme options live under **Appearance → Customize → Theme Options**.
 
-* Participate on the [Roots Discourse](https://discourse.roots.io/)
-* Follow [@rootswp on Twitter](https://twitter.com/rootswp)
-* Read and subscribe to the [Roots Blog](https://roots.io/blog/)
-* Subscribe to the [Roots Newsletter](https://roots.io/subscribe/)
+ACF field groups are versioned in `web/app/themes/dayjobsnightlife/resources/acf-json/`.
+
+## Auto deploy to FTP
+
+Configure these GitHub repository secrets:
+
+| Secret | Example | Purpose |
+| --- | --- | --- |
+| `FTP_SERVER` | `ftp.example.com` | FTP host |
+| `FTP_USERNAME` | `deploy@example.com` | FTP user |
+| `FTP_PASSWORD` | `***` | FTP password |
+| `FTP_DEPLOY_MODE` | `theme` or `bedrock` | Deploy strategy |
+| `FTP_THEME_PATH` | `/public_html/wp-content/themes/dayjobsnightlife/` | Theme-only target |
+| `FTP_REMOTE_PATH` | `/public_html/` | Bedrock/full-site target |
+
+Pushes to `master`/`main` run `.github/workflows/deploy.yml`.
+
+## Project structure
+
+```
+config/                 WordPress configuration
+web/
+  app/
+    plugins/            Composer-managed plugins
+    themes/
+      dayjobsnightlife/ Sage 10 theme
+        app/              PHP (Composers, setup, options)
+        resources/        Blade views, SCSS, images, ACF JSON
+        public/           Built assets
+  wp/                   WordPress core (Composer)
+```
+
+## License
+
+MIT

@@ -1,0 +1,29 @@
+// Bootstrap settings (must be defined before Bootstrap is imported)
+$enable-flex: true;
+
+// Theme layout
+$main-sm-columns: 12;
+$sidebar-sm-columns: 4;
+
+// Spacing
+$spacing-xs: 6px;
+$spacing-sm: 12px;
+$spacing-md: 24px;
+$spacing-lg: 48px;
+
+// Brand colors (prefixed to avoid clashing with Bootstrap variables)
+$djnl-purple: #9d00ff;
+$djnl-blue: #37bbff;
+$djnl-green: #74c707;
+$djnl-pink: #ff09de;
+$djnl-orange: #ff4c06;
+$djnl-grey: #636363;
+$djnl-white: #fff;
+$djnl-grey-light: #e1e1e1;
+$djnl-black: #363636;
+
+// Typography
+$museo: "museo-sans", sans-serif;
+$font-weight-bold: 600;
+$font-weight-semibold: 400;
+$font-weight-light: 200;
