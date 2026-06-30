@@ -20,23 +20,23 @@
     transition: all .2s ease;
 
     &.blue {
-      background: $blue;
+      background: $djnl-blue;
     }
 
     &.green {
-      background: $green;
+      background: $djnl-green;
     }
 
     &.pink {
-      background: $pink;
+      background: $djnl-pink;
     }
 
     &.orange {
-      background: $orange;
+      background: $djnl-orange;
     }
 
     &.grey {
-      background: $gray;
+      background: $djnl-grey;
     }
 
     &:hover {
@@ -141,11 +141,11 @@
     float: left;
 
     a {
-      font-weight: $light;
-      color: $blue;
+      font-weight: $font-weight-light;
+      color: $djnl-blue;
 
       &:hover {
-        border-bottom: 2px solid $blue;
+        border-bottom: 2px solid $djnl-blue;
         text-decoration: none;
       }
     }

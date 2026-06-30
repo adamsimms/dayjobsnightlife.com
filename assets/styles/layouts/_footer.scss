@@ -1,26 +1,26 @@
 footer {
   padding: $spacing-lg 0 $spacing-lg;
   margin: $spacing-lg 0 $spacing-sm;
-  background: $black;
-  color: $white;
+  background: $djnl-black;
+  color: $djnl-white;
 
   h5 {
     text-transform: uppercase;
-    font-weight: $light;
+    font-weight: $font-weight-light;
   }
 
   p {
-    font-weight: $light;
+    font-weight: $font-weight-light;
   }
 
   span {
     text-transform: uppercase;
-    color: $purple;
-    font-weight: $semibold;
+    color: $djnl-purple;
+    font-weight: $font-weight-semibold;
     margin: 0;
   }
 }
 
 .credits {
-  color: $grey;
+  color: $djnl-grey;
 }

@@ -1,21 +1,21 @@
 .sidebar-posts {
   margin: $spacing-sm 0;
   padding: $spacing-md $spacing-md 0;
-  border: 1px solid $grey-light;
+  border: 1px solid $djnl-grey-light;
 
   h4 {
-    font-weight: $light;
+    font-weight: $font-weight-light;
     text-transform: uppercase;
     margin: 0 0 $spacing-md 0;
 
     a {
-      color: $blue;
+      color: $djnl-blue;
     }
   }
 
   .btn-arrow {
     margin: -1px 0 0;
-    font-weight: $bold;
+    font-weight: $font-weight-bold;
     float: right;
   }
 
@@ -42,24 +42,24 @@
   }
 
   a {
-    color: $grey;
+    color: $djnl-grey;
 
     &:hover {
-      color: $blue;
+      color: $djnl-blue;
       text-decoration: none;
     }
   }
 
   h6 {
     font-style: normal;
-    font-weight: $semibold;
+    font-weight: $font-weight-semibold;
     margin: $spacing-xs 0 0;
     text-transform: uppercase;
   }
 
   p {
     margin: 0;
-    font-weight: $light;
+    font-weight: $font-weight-light;
     font-size: .9em;
   }
 }
