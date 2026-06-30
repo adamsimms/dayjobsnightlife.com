@@ -1,40 +1,27 @@
 # Day Jobs and the Nightlife
 
-WordPress site for [dayjobsnightlife.com](https://dayjobsnightlife.com), managed with [Bedrock](https://roots.io/bedrock/) and a custom [Sage 10](https://roots.io/sage/) theme.
+WordPress site for [dayjobsnightlife.com](https://dayjobsnightlife.com). This repository contains a [Bedrock](https://roots.io/bedrock/) project for local development and a [Sage 10](https://roots.io/sage/) theme that deploys to DreamHost.
 
-## Should WordPress live in this repo?
+## Production hosting (DreamHost)
 
-**Yes — for this project, that is the right call.** This repository now uses Bedrock, which means:
+**Recommended approach:** keep WordPress on DreamHost and deploy **only the built theme** via SFTP.
 
-| In git | Not in git |
-| --- | --- |
-| WordPress core (via Composer) | `.env` secrets |
-| Theme source + built assets | Database |
-| Plugin declarations (Composer) | `web/app/uploads/` media |
-| Config templates | Server credentials |
+```
+GitHub Actions
+  → composer install (theme)
+  → npm run build
+  → SFTP upload
+  → DreamHost: wp-content/themes/dayjobsnightlife/
+```
 
-That gives you versioned infrastructure, reproducible installs, and safer deployments. You still migrate the database and uploads separately when moving environments.
-
-## Hosting options
-
-### Option A: Bedrock-native hosting (best)
-
-Point the web server document root at `web/`. Deploy the full Bedrock project.
-
-### Option B: Classic shared hosting + FTP (common)
-
-Keep the existing WordPress install on the server and deploy **only the built theme** to:
-
-`public_html/wp-content/themes/dayjobsnightlife/`
-
-Set GitHub secret `FTP_DEPLOY_MODE=theme`.
+WordPress core, database, and uploads stay on DreamHost. The repo is the source of truth for theme code.
 
 ## Requirements
 
 - PHP 8.3+
 - Composer 2
 - Node.js 20+
-- MySQL
+- MySQL (local dev)
 
 ## Local setup
 
@@ -49,8 +36,6 @@ npm install
 npm run build
 ```
 
-Point your local site URL at the value of `WP_HOME` in `.env` (for example `https://dayjobsnightlife.test`).
-
 ## Theme development
 
 ```bash
@@ -60,47 +45,86 @@ npm run dev
 
 ## Plugins
 
-Installed via Composer:
+Installed via Composer in this repo (for local Bedrock dev):
 
 - Advanced Custom Fields
 
-Recommended manual installs:
+Install manually on DreamHost production:
 
-- [Soil](https://roots.io/plugins/soil/)
+- [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/) (if not already installed)
+- [Soil](https://roots.io/plugins/soil/) (recommended)
 - Mailchimp plugin for the footer signup form
 
-Theme options live under **Appearance → Customize → Theme Options**.
+Theme options: **Appearance → Customize → Theme Options**
 
-ACF field groups are versioned in `web/app/themes/dayjobsnightlife/resources/acf-json/`.
+ACF field groups: `web/app/themes/dayjobsnightlife/resources/acf-json/`
 
-## Auto deploy to FTP
+## Auto deploy to DreamHost (SFTP)
 
-Configure these GitHub repository secrets:
+Workflow: `.github/workflows/deploy.yml`
 
-| Secret | Example | Purpose |
+Runs on push to `master`/`main`, or manually via **Actions → Deploy Theme → Run workflow**.
+
+### 1. Find your DreamHost SFTP details
+
+In the DreamHost panel:
+
+1. **Manage Websites** → your domain
+2. Note the **username** (shell user)
+3. SFTP host is usually your domain (`dayjobsnightlife.com`) or `server.dreamhost.com`
+4. Theme path is typically:
+
+```
+/home/YOUR_USERNAME/dayjobsnightlife.com/wp-content/themes/dayjobsnightlife/
+```
+
+Create the `dayjobsnightlife` folder under `wp-content/themes/` if it does not exist yet.
+
+### 2. Add GitHub secrets
+
+Repository → **Settings → Secrets and variables → Actions**
+
+| Secret | Required | Example |
 | --- | --- | --- |
-| `FTP_SERVER` | `ftp.example.com` | FTP host |
-| `FTP_USERNAME` | `deploy@example.com` | FTP user |
-| `FTP_PASSWORD` | `***` | FTP password |
-| `FTP_DEPLOY_MODE` | `theme` or `bedrock` | Deploy strategy |
-| `FTP_THEME_PATH` | `/public_html/wp-content/themes/dayjobsnightlife/` | Theme-only target |
-| `FTP_REMOTE_PATH` | `/public_html/` | Bedrock/full-site target |
+| `SFTP_SERVER` | Yes | `dayjobsnightlife.com` or `server.dreamhost.com` |
+| `SFTP_USERNAME` | Yes | DreamHost shell username |
+| `SFTP_PASSWORD` | Yes* | DreamHost password |
+| `SFTP_THEME_PATH` | Yes | `/home/USERNAME/dayjobsnightlife.com/wp-content/themes/dayjobsnightlife/` |
+| `SFTP_PORT` | No | `22` (default) |
+| `SFTP_PRIVATE_KEY` | No | SSH private key (use instead of password) |
+| `SFTP_PASSPHRASE` | No | Key passphrase, if encrypted |
 
-Pushes to `master`/`main` run `.github/workflows/deploy.yml`.
+\*Use either `SFTP_PASSWORD` or `SFTP_PRIVATE_KEY`.
+
+### 3. First deploy checklist
+
+- [ ] Theme folder exists on DreamHost
+- [ ] ACF plugin active on production WordPress
+- [ ] PHP 8.1+ on DreamHost (Sage 10 requirement)
+- [ ] Activate **Day Jobs and the Nightlife** under Appearance → Themes
+- [ ] Configure **Theme Options** in the Customizer
+
+### 4. What gets deployed
+
+| Deployed | Excluded (built in CI) |
+| --- | --- |
+| `app/` PHP code | `resources/` source files |
+| `public/` compiled assets | `node_modules/` |
+| `vendor/` (Acorn, etc.) | `bud.config.js`, `package.json` |
+| `style.css`, `functions.php` | dev config files |
 
 ## Project structure
 
 ```
-config/                 WordPress configuration
+config/                 WordPress configuration (local Bedrock dev)
 web/
   app/
-    plugins/            Composer-managed plugins
     themes/
-      dayjobsnightlife/ Sage 10 theme
+      dayjobsnightlife/ Sage 10 theme ← deploy this folder
         app/              PHP (Composers, setup, options)
         resources/        Blade views, SCSS, images, ACF JSON
-        public/           Built assets
-  wp/                   WordPress core (Composer)
+        public/           Built assets (generated by npm run build)
+  wp/                   WordPress core (local dev only)
 ```
 
 ## License

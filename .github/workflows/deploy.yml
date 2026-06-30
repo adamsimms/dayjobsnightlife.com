@@ -1,9 +1,13 @@
-name: Deploy
+name: Deploy Theme
 
 on:
   push:
     branches: [master, main]
   workflow_dispatch:
+
+concurrency:
+  group: deploy-theme-production
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -17,11 +21,9 @@ jobs:
           php-version: '8.3'
           tools: composer:v2
 
-      - name: Install production dependencies
-        run: |
-          composer install --no-dev --optimize-autoloader --no-interaction
-          cd web/app/themes/dayjobsnightlife
-          composer install --no-dev --optimize-autoloader --no-interaction
+      - name: Install theme production dependencies
+        working-directory: web/app/themes/dayjobsnightlife
+        run: composer install --no-dev --optimize-autoloader --no-interaction
 
       - uses: actions/setup-node@v4
         with:
@@ -35,24 +37,27 @@ jobs:
           npm ci
           npm run build
 
-      - name: Deploy theme to FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy theme via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: web/app/themes/dayjobsnightlife/
-          server-dir: ${{ secrets.FTP_THEME_PATH }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/resources/**
-            **/bud.config.js
-            **/package.json
-            **/package-lock.json
-            **/tailwind.config.js
-            **/jsconfig.json
-            **/yarn.lock
-            **/.eslintrc.json
-            **/.nvmrc
+          server: ${{ secrets.SFTP_SERVER }}
+          port: 22
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          sftp_only: true
+          local_path: ./web/app/themes/dayjobsnightlife/
+          remote_path: ${{ secrets.SFTP_THEME_PATH }}
+          sftpArgs: -o ConnectTimeout=30 -o StrictHostKeyChecking=no
+          rsyncArgs: >-
+            --exclude=.git
+            --exclude=node_modules
+            --exclude=resources
+            --exclude=.budfiles
+            --exclude=bud.config.js
+            --exclude=package.json
+            --exclude=package-lock.json
+            --exclude=jsconfig.json
+            --exclude=.eslintrc.json
+            --exclude=.nvmrc
+            --exclude=tailwind.config.js
+            --exclude=yarn.lock
