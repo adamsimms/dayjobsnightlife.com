@@ -36,7 +36,7 @@
     }
 
     &.grey {
-      background: $gray;
+      background: $grey;
     }
 
     &:hover {
@@ -141,7 +141,7 @@
     float: left;
 
     a {
-      font-weight: $light;
+      font-weight: $font-light;
       color: $blue;
 
       &:hover {

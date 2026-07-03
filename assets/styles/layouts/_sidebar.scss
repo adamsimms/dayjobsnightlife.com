@@ -4,7 +4,7 @@
   border: 1px solid $grey-light;
 
   h4 {
-    font-weight: $light;
+    font-weight: $font-light;
     text-transform: uppercase;
     margin: 0 0 $spacing-md 0;
 
@@ -59,7 +59,7 @@
 
   p {
     margin: 0;
-    font-weight: $light;
+    font-weight: $font-light;
     font-size: .9em;
   }
 }

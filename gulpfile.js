@@ -17,6 +17,7 @@ var plumber      = require('gulp-plumber');
 var rev          = require('gulp-rev');
 var runSequence  = require('run-sequence');
 var sass         = require('gulp-sass');
+sass.compiler = require('node-sass');
 var sourcemaps   = require('gulp-sourcemaps');
 var uglify       = require('gulp-uglify');
 
@@ -86,13 +87,10 @@ var cssTasks = function(filename) {
       return gulpif(enabled.maps, sourcemaps.init());
     })
     .pipe(function() {
-      return gulpif('*.less', less());
-    })
-    .pipe(function() {
       return gulpif('*.scss', sass({
         outputStyle: 'nested', // libsass doesn't support expanded yet
         precision: 10,
-        includePaths: ['.'],
+        includePaths: [path.source + 'styles'],
         errLogToConsole: !enabled.failStyleTask
       }));
     })
@@ -177,7 +175,7 @@ gulp.task('styles', ['wiredep'], function() {
         this.emit('end');
       });
     }
-    merged.add(gulp.src(dep.globs, {base: 'styles'})
+    merged.add(gulp.src(dep.globs, {base: path.source + 'styles'})
       .pipe(cssTasksInstance));
   });
   return merged
@@ -191,7 +189,7 @@ gulp.task('scripts', ['jshint'], function() {
   var merged = merge();
   manifest.forEachDependency('js', function(dep) {
     merged.add(
-      gulp.src(dep.globs, {base: 'scripts'})
+      gulp.src(dep.globs, {base: path.source + 'scripts'})
         .pipe(jsTasks(dep.name))
     );
   });
