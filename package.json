@@ -18,8 +18,8 @@
     }
   ],
   "scripts": {
-    "build": "bower install && gulp",
-    "build:production": "bower install && gulp --production"
+    "build": "npx bower install --allow-root && gulp",
+    "build:production": "npx bower install --allow-root && gulp --production"
   },
   "engines": {
     "node": ">=18.0.0",
