@@ -1,0 +1,61 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  wordpress:
+    image: wordpress:php8.2-apache
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${WP_PORT:-8080}:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', getenv('WP_HOME') ?: 'http://localhost:8080');
+        define('WP_SITEURL', getenv('WP_SITEURL') ?: 'http://localhost:8080');
+    volumes:
+      - wp_data:/var/www/html
+      - ./backups/wp-content:/var/www/html/wp-content
+      - ./theme:/var/www/html/wp-content/themes/dayjobsnightlife
+
+  wpcli:
+    image: wordpress:cli-php8.2
+    depends_on:
+      db:
+        condition: service_healthy
+      wordpress:
+        condition: service_started
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp_data:/var/www/html
+      - ./backups/wp-content:/var/www/html/wp-content
+      - ./theme:/var/www/html/wp-content/themes/dayjobsnightlife
+    user: "33:33"
+    entrypoint: wp
+    command: "--info"
+
+volumes:
+  db_data:
+  wp_data:
