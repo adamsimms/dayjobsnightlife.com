@@ -25,6 +25,9 @@
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
   },
+  "overrides": {
+    "immutable": "4.3.9"
+  },
   "devDependencies": {
     "browser-sync": "^3.0.3",
     "del": "^6.1.1",
