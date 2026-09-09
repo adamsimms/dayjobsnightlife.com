@@ -43,5 +43,9 @@
     "merge-stream": "^2.0.0",
     "minimist": "^1.2.8",
     "sass": "^1.77.8"
+  },
+  "overrides": {
+    "immutable": "4.3.9",
+    "decode-uri-component": "0.5.0"
   }
 }
