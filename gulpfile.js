@@ -11,7 +11,6 @@ var cleanCss     = require('gulp-clean-css');
 var plumber      = require('gulp-plumber');
 var rev          = require('gulp-rev');
 var sass         = require('gulp-sass')(require('sass'));
-var sourcemaps   = require('gulp-sourcemaps');
 var uglify       = require('gulp-uglify');
 var manifest     = require('./lib/gulp-manifest')('./assets/manifest.json');
 
@@ -31,7 +30,6 @@ var revManifest = path.dist + 'assets.json';
 function styles() {
   var stream = gulp.src('assets/styles/main.scss', {sourcemaps: enabled.maps})
     .pipe(gulpif(!enabled.failStyleTask, plumber()))
-    .pipe(gulpif(enabled.maps, sourcemaps.init()))
     .pipe(sass({
       outputStyle: enabled.rev ? 'compressed' : 'expanded',
       includePaths: [path.source + 'styles'],
@@ -50,8 +48,7 @@ function styles() {
       rebase: false
     }))
     .pipe(gulpif(enabled.rev, rev()))
-    .pipe(gulpif(enabled.maps, sourcemaps.write('.')))
-    .pipe(gulp.dest(path.dist + 'styles'))
+    .pipe(gulp.dest(path.dist + 'styles', {sourcemaps: enabled.maps ? '.' : false}))
     .pipe(gulpif(enabled.rev, rev.manifest(revManifest, {
       base: path.dist,
       merge: true
@@ -67,7 +64,6 @@ function styles() {
 
 function buildScripts(entry, outputName) {
   return gulp.src(entry, {sourcemaps: enabled.maps})
-    .pipe(gulpif(enabled.maps, sourcemaps.init()))
     .pipe(concat(outputName))
     .pipe(uglify({
       compress: {
@@ -75,8 +71,7 @@ function buildScripts(entry, outputName) {
       }
     }))
     .pipe(gulpif(enabled.rev, rev()))
-    .pipe(gulpif(enabled.maps, sourcemaps.write('.')))
-    .pipe(gulp.dest(path.dist + 'scripts'))
+    .pipe(gulp.dest(path.dist + 'scripts', {sourcemaps: enabled.maps ? '.' : false}))
     .pipe(gulpif(enabled.rev, rev.manifest(revManifest, {
       base: path.dist,
       merge: true
