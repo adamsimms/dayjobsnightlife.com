@@ -1,0 +1,30 @@
+# Pass through new media paths (must stay above the flat /assets/:file rule).
+/assets/images/* /assets/images/:splat 200
+/assets/fonts/* /assets/fonts/:splat 200
+
+/site.css /css/site.css 301
+/fonts/* /assets/fonts/:splat 301
+/assets/:file /assets/images/:file 301
+
+/uncategorized/bar-inc /bars/bar-inc 301
+/uncategorized/bar-inc/ /bars/bar-inc/ 301
+/uncategorized/big-in-japan /bars/big-in-japan 301
+/uncategorized/big-in-japan/ /bars/big-in-japan/ 301
+/uncategorized/ladies-night /blogs/ladies-night 301
+/uncategorized/ladies-night/ /blogs/ladies-night/ 301
+/uncategorized/le-mechant-beouf /restaurants/le-mechant-beouf 301
+/uncategorized/le-mechant-beouf/ /restaurants/le-mechant-beouf/ 301
+/uncategorized/le-vallier /restaurants/le-vallier 301
+/uncategorized/le-vallier/ /restaurants/le-vallier/ 301
+/uncategorized/mortimer-snograss /bars/mortimer-snograss 301
+/uncategorized/mortimer-snograss/ /bars/mortimer-snograss/ 301
+/uncategorized/movember /culture/movember 301
+/uncategorized/movember/ /culture/movember/ 301
+/uncategorized/zero1-hotel /hotels/zero1-hotel 301
+/uncategorized/zero1-hotel/ /hotels/zero1-hotel/ 301
+/uncategorized / 301
+/uncategorized/ / 301
+/category/uncategorized /category/blogs/ 301
+/category/uncategorized/ /category/blogs/ 301
+/type/* / 301
+/type / 301

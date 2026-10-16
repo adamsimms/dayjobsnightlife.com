@@ -1,6 +1,6 @@
 # Day Jobs / Nightlife
 
-Static site for [dayjobsnightlife.pages.dev](https://dayjobsnightlife.pages.dev/). HTML, CSS, fonts, and images live at the repo root. Cloudflare Pages deploys from the `main` branch.
+Static site for [dayjobsnightlife.pages.dev](https://dayjobsnightlife.pages.dev/). HTML lives at the repo root. Styles are in `css/`, media in `assets/images/` and `assets/fonts/`. Cloudflare Pages deploys from the `main` branch.
 
 ## Deploy
 

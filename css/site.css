@@ -352,10 +352,10 @@ main.djnl-archive .wp-block-query.alignwide, main.djnl-archive h1.wp-block-query
 
 
 
-@font-face{font-family:Jost;font-style:normal;font-weight:400;font-display:fallback;src:url('/fonts/jost_normal_400.ttf') format('truetype');}
-@font-face{font-family:Jost;font-style:normal;font-weight:500;font-display:fallback;src:url('/fonts/jost_normal_500.ttf') format('truetype');}
-@font-face{font-family:Jost;font-style:normal;font-weight:600;font-display:fallback;src:url('/fonts/jost_normal_600.ttf') format('truetype');}
-@font-face{font-family:Jost;font-style:normal;font-weight:700;font-display:fallback;src:url('/fonts/jost_normal_700.ttf') format('truetype');}
+@font-face{font-family:Jost;font-style:normal;font-weight:400;font-display:fallback;src:url('/assets/fonts/jost_normal_400.ttf') format('truetype');}
+@font-face{font-family:Jost;font-style:normal;font-weight:500;font-display:fallback;src:url('/assets/fonts/jost_normal_500.ttf') format('truetype');}
+@font-face{font-family:Jost;font-style:normal;font-weight:600;font-display:fallback;src:url('/assets/fonts/jost_normal_600.ttf') format('truetype');}
+@font-face{font-family:Jost;font-style:normal;font-weight:700;font-display:fallback;src:url('/assets/fonts/jost_normal_700.ttf') format('truetype');}
 
 
 

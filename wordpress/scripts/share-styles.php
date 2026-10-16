@@ -115,7 +115,7 @@ function djnl_share_styles( string $root ): void {
 		$parts[] = trim( $fonts );
 	}
 	$css  = implode( "\n\n", $parts ) . "\n";
-	$path = $root . '/site.css';
+	$path = $root . '/css/site.css';
 	file_put_contents( $path, $css );
 
 	$before = 0;
@@ -254,8 +254,8 @@ function djnl_strip_page( string $html ): string {
 			return true;
 		}
 	);
-	$link = '<link rel="stylesheet" href="/site.css" />' . "\n";
-	if ( ! str_contains( $html, 'href="/site.css"' ) ) {
+	$link = '<link rel="stylesheet" href="/css/site.css" />' . "\n";
+	if ( ! str_contains( $html, 'href="/css/site.css"' ) ) {
 		$azur = preg_replace( '#(<link[^>]+id=[\'"]azur-style-css[\'"][^>]*>)#i', $link . '$1', $html, 1 );
 		if ( is_string( $azur ) && $azur !== $html ) {
 			$html = $azur;
@@ -319,13 +319,13 @@ function djnl_headers(): string {
 	return <<<'EOF'
 # HTML keeps the Pages default: revalidate on each visit.
 # Images, fonts, and the stylesheet stay cached.
-/assets/*
+/assets/images/*
   Cache-Control: public, max-age=31536000, immutable
 
-/fonts/*
+/assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
-/site.css
+/css/site.css
   Cache-Control: public, max-age=31536000, immutable
 EOF;
 }
@@ -340,7 +340,7 @@ function djnl_strip_static_links( string $html ): string {
 }
 
 function djnl_trim_fonts( string $root ): int {
-	$path = $root . '/site.css';
+	$path = $root . '/css/site.css';
 	$css  = file_get_contents( $path );
 	if ( ! is_string( $css ) ) {
 		return 0;
@@ -377,7 +377,7 @@ function djnl_trim_fonts( string $root ): int {
 				return $rule;
 			}
 			$kept++;
-			$rewritten = preg_replace( '#url\\([^)]+\\)\\)?#', "url('/fonts/{$name}')", $rule, 1 );
+			$rewritten = preg_replace( '#url\\([^)]+\\)\\)?#', "url('/assets/fonts/{$name}')", $rule, 1 );
 			return is_string( $rewritten ) ? $rewritten : $rule;
 		},
 		$css
@@ -390,7 +390,7 @@ function djnl_trim_fonts( string $root ): int {
 
 function djnl_delete_bmp_html( string $root ): int {
 	$removed = 0;
-	foreach ( glob( $root . '/assets/*', GLOB_ONLYDIR ) ?: array() as $dir ) {
+	foreach ( glob( $root . '/assets/images/*', GLOB_ONLYDIR ) ?: array() as $dir ) {
 		if ( str_ends_with( strtolower( $dir ), '.bmp' ) ) {
 			djnl_delete_tree( $dir );
 			$removed++;
