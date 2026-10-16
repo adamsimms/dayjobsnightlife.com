@@ -1,0 +1,31 @@
+Day Jobs / Nightlife WordPress archive
+Taken: 2026-10-05
+
+This folder is the site-specific record, not a full WordPress install.
+
+Included
+- database.sql.gz: dump of local database djnl_local
+- wp-content/themes/azur: active theme (Azur 1.0.4)
+- wp-content/themes/djnl, djnl-sm: earlier custom themes (node_modules/vendor omitted; reinstall via composer/npm if needed)
+- wp-content/mu-plugins/djnl-archive-title.php
+- local-router.php, .htaccess
+- wp-config-local.example.php: local DB overrides template
+
+Not included (keep on Drive or regenerate)
+- WordPress core (wp-admin, wp-includes, root PHP): install WordPress 7.1.2
+- assets/: original media library (~3.3 GB). Live site uses the optimized static copies under /assets/images/
+- wp-config.php: never commit; it held hosted DB credentials
+
+The Cloudflare Pages site is a static copy. It is not this archive.
+
+To stand it up again
+
+1. Install WordPress 7.1.2 into an empty directory.
+2. Copy this folder's wp-content over the install's wp-content (merge themes and mu-plugins).
+3. Copy local-router.php and .htaccess to the install root if useful.
+4. Install MariaDB or MySQL. Create an empty database.
+5. Load the dump: gzip -dc database.sql.gz | mysql -u USER -p DATABASE
+6. Copy wp-config-local.example.php to wp-config-local.php and set DB_NAME, DB_USER, DB_PASSWORD, DB_HOST. Point wp-config.php at that file the same way the original local copy did (require it before production DB defines).
+7. Restore media from Drive dayjobsnightlife-backup/assets/ into the install's assets/ path (or uploads, if you remap).
+8. Serve the folder. Permalinks are /category/post-name/.
+9. The dump uses http://127.0.0.1:8080. If the address changes, run a WP-CLI search-replace before serving it.

@@ -1,0 +1,21 @@
+# Never commit live or local credentials
+wp-config.php
+wp-config-local.php
+
+# Regenerable theme deps
+**/node_modules/
+**/vendor/
+
+# Runtime noise if a full install is unpacked here
+wp-admin/
+wp-includes/
+assets/
+wp-content/cache/
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/upgrade-temp-backup/
+wp-content/wphb-*/
+wp-content/w3tc-config/
+wp-content/debug.log
+*.log
+.DS_Store

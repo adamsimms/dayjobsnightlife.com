@@ -12,6 +12,6 @@ rm -rf wordpress README.md .gitignore
 
 Build output directory: `/`
 
-## WordPress tooling
+## WordPress
 
-Layout templates and the static export scripts are under [`wordpress/`](wordpress/). They are not part of the live site. See [`wordpress/README.md`](wordpress/README.md).
+The WordPress site archive lives under [`wordpress/`](wordpress/). It is not part of the live site. See [`wordpress/README.md`](wordpress/README.md).
