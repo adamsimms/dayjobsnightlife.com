@@ -7,11 +7,7 @@ Static site for [dayjobsnightlife.pages.dev](https://dayjobsnightlife.pages.dev/
 Pushes to `main` deploy production. The Pages build drops non-site paths before upload:
 
 ```
-rm -rf wordpress README.md .gitignore
+rm -rf README.md .gitignore
 ```
 
 Build output directory: `/`
-
-## WordPress
-
-The WordPress site archive lives under [`wordpress/`](wordpress/). It is not part of the live site. See [`wordpress/README.md`](wordpress/README.md).
