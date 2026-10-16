@@ -4,10 +4,10 @@ Static site for [dayjobsnightlife.pages.dev](https://dayjobsnightlife.pages.dev/
 
 ## Deploy
 
-Pushes to `main` deploy production. The Pages build drops the WordPress tooling before upload:
+Pushes to `main` deploy production. The Pages build drops non-site paths before upload:
 
 ```
-rm -rf wordpress
+rm -rf wordpress README.md .gitignore
 ```
 
 Build output directory: `/`
