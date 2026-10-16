@@ -4,7 +4,7 @@
  */
 
 function djnl_apply_seo( string $root ): void {
-	$origin = 'https://dayjobsnightlife.com';
+	$origin = 'https://dayjobsnightlife.pages.dev';
 	$urls   = array();
 	$pages  = 0;
 	foreach ( djnl_html_files( $root ) as $file ) {
@@ -161,8 +161,8 @@ function djnl_write_seo_head( string $html, string $canonical, string $descripti
 	if ( preg_match( '#<main\b[^>]*>.*?<img\b[^>]*\bsrc=[\'"]([^\'"]+)#is', $html, $img ) ) {
 		$src = $img[1];
 		if ( str_starts_with( $src, '/' ) ) {
-			$image = 'https://dayjobsnightlife.com' . $src;
-		} elseif ( str_starts_with( $src, 'https://dayjobsnightlife.com/' ) ) {
+			$image = 'https://dayjobsnightlife.pages.dev' . $src;
+		} elseif ( str_starts_with( $src, 'https://dayjobsnightlife.pages.dev/' ) ) {
 			$image = $src;
 		}
 	}
